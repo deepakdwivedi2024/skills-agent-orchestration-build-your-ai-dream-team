@@ -1,0 +1,32 @@
+{
+  "projects": [
+    {
+      "name": "Aurora Labs",
+      "owner": "Maya Chen",
+      "status": "On Track",
+      "recentActivity": "Merged three feature PRs and closed a blocker in the delivery pipeline.",
+      "priority": "High"
+    },
+    {
+      "name": "Atlas Platform",
+      "owner": "Liam Ruiz",
+      "status": "At Risk",
+      "recentActivity": "API token rotation delayed integration testing for the new release window.",
+      "priority": "Critical"
+    },
+    {
+      "name": "Northstar Docs",
+      "owner": "Priya Shah",
+      "status": "Stable",
+      "recentActivity": "Updated onboarding steps and refreshed support documentation for contributors.",
+      "priority": "Medium"
+    },
+    {
+      "name": "Signal Ops",
+      "owner": "Alex Nguyen",
+      "status": "Review",
+      "recentActivity": "Investigated monitoring alerts and prepared follow-up actions for the next sprint.",
+      "priority": "Low"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Pulse</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="dashboard">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Mona's team</p>
+          <h1>Project Pulse</h1>
+        </div>
+        <div class="summary-pill" id="summary-pill">Loading projects...</div>
+      </header>
+
+      <section id="project-grid" class="project-grid" aria-live="polite"></section>
+    </main>
+
+    <script>
+      fetch("./project-data.json")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Unable to load project data");
+          }
+          return response.json();
+        })
+        .then((data) => {
+          const projects = Array.isArray(data.projects) ? data.projects : [];
+          const grid = document.getElementById("project-grid");
+          const summary = document.getElementById("summary-pill");
+
+          summary.textContent = `${projects.length} active projects`;
+
+          if (!projects.length) {
+            grid.innerHTML = `
+              <article class="empty-state">
+                <h2>No project data available</h2>
+                <p>Check the project data source to populate the dashboard.</p>
+              </article>
+            `;
+            return;
+          }
+
+          grid.innerHTML = projects
+            .map(
+              (project) => `
+                <article class="project-card" aria-label="${project.name}">
+                  <div class="card-header">
+                    <div>
+                      <p class="project-owner">${project.owner}</p>
+                      <h2>${project.name}</h2>
+                    </div>
+                    <span class="status-pill status-${project.status.toLowerCase().replace(/\s+/g, "-")}">${project.status}</span>
+                  </div>
+
+                  <p class="project-summary">${project.recentActivity}</p>
+
+                  <div class="meta-row">
+                    <div class="meta-block">
+                      <span class="label">Priority</span>
+                      <span class="priority-pill">${project.priority}</span>
+                    </div>
+                  </div>
+                </article>
+              `
+            )
+            .join("");
+        })
+        .catch((error) => {
+          document.getElementById("project-grid").innerHTML = `
+            <article class="empty-state">
+              <h2>Project data could not be loaded</h2>
+              <p>${error.message}</p>
+            </article>
+          `;
+        });
+    </script>
+  </body>
+</html>
